@@ -94,8 +94,10 @@ objects:
           containers:
             - name: php-producer
               image: '${NAME}:latest'
-              command: 'php'
-              args: 'run_producer.php'
+              command: 
+                - 'php'
+              args: 
+                - 'run_producer.php'
               env: 
                 - name: KAFKA_SERVICE_NAME
                   value: '${KAFKA_SERVICE_NAME}'
@@ -129,8 +131,10 @@ objects:
           containers:
             - name: php-consumer
               image: '${NAME}:latest'
-              command: 'php'
-              args: 'run_consumer.php'
+              command: 
+                - 'php'
+              args: 
+                - 'run_consumer.php'
               env: 
                 - name: KAFKA_SERVICE_NAME
                   value: '${KAFKA_SERVICE_NAME}'
