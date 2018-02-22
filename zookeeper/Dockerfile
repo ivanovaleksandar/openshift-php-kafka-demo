@@ -51,4 +51,5 @@ RUN useradd -u 1001 -r -c "Zookeeper User" $ZK_USER && \
 
 WORKDIR "/opt/zookeeper"
 
-USER 1001
+# USER 1001
+USER $ZK_USER
