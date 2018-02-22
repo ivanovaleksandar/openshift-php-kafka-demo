@@ -1,26 +1,26 @@
 apiVersion: v1
 kind: Template
 labels:
-  template: openshift-php-kafka-demo
+  template: php-kafka-demo
 metadata:
   annotations:
     openshift.io/display-name: Openshift PHP Kafka demo
     description: >-
       A sample application that creates a provider and a consumer
       with Kafka instance to act as a queue broker   
-    tags: 'openshift-php-kafka-demo'
-  name: openshift-php-kafka-demo
+    tags: 'php-kafka-demo'
+  name: php-kafka-demo
 parameters:
   - name: NAME
     description: The name of the application
     displayName: Name
     required: true
-    value: openshift-php-kafka-demo
+    value: php-kafka-demo
   - name: SERVICE_NAME
     description: The name of the service for accesing the app
     displayName: Service Name
     required: true
-    value: openshift-php-kafka-demo-service
+    value: php-kafka-demo-service
   - name: SOURCE_REPOSITORY_URL
     description: The URL of the repository with your application source code.
     displayName: Git Repository URL
