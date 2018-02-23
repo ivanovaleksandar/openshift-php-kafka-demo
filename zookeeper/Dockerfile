@@ -1,5 +1,7 @@
 FROM rhel:7.4
 
+USER root
+
 ENV ZK_USER=zookeeper \
     ZK_DATA_DIR=/var/lib/zookeeper/data \
     ZK_DATA_LOG_DIR=/var/lib/zookeeper/log \
