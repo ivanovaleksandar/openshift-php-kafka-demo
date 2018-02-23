@@ -5,7 +5,7 @@ ENV JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk \
     SCALA_VERSION=2.11 \
     KAFKA_HOME=/opt/kafka
 
-COPY fix-permissions /usr/local/bin && chmod 777 /usr/local/bin/fix-permissions
+COPY fix-permissions /usr/local/bin 
 
 RUN INSTALL_PKGS="gettext tar zip unzip hostname java-1.8.0-openjdk" && \
     yum install -y $INSTALL_PKGS && \

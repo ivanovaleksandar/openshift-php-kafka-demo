@@ -1,7 +1,5 @@
 FROM rhel:7.4
 
-USER root
-
 ENV ZK_USER=zookeeper \
     ZK_DATA_DIR=/var/lib/zookeeper/data \
     ZK_DATA_LOG_DIR=/var/lib/zookeeper/log \
@@ -9,13 +7,14 @@ ENV ZK_USER=zookeeper \
     JAVA_HOME=/usr/lib/jvm/jre-1.8.0-openjdk \
     ZK_DIST=zookeeper-3.4.11
 
-COPY fix-permissions /usr/local/bin
-
 RUN INSTALL_PKGS="gettext tar zip unzip hostname nmap-ncat java-1.8.0-openjdk" && \
     yum install -y $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
-    yum clean all  && \
-    curl -fsSL https://archive.apache.org/dist/zookeeper/$ZK_DIST/$ZK_DIST.tar.gz | tar xzf - -C /opt && \
+    yum clean all 
+
+COPY fix-permissions /usr/local/bin
+
+RUN curl -fsSL https://archive.apache.org/dist/zookeeper/$ZK_DIST/$ZK_DIST.tar.gz | tar xzf - -C /opt && \
     /usr/local/bin/fix-permissions /opt/$ZK_DIST && \
     ln -s /opt/$ZK_DIST /opt/zookeeper && \
     rm -rf /opt/zookeeper/CHANGES.txt \
