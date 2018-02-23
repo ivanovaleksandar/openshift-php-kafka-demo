@@ -14,11 +14,9 @@ RUN INSTALL_PKGS="gettext tar zip unzip hostname nmap-ncat java-1.8.0-openjdk" &
     rpm -V $INSTALL_PKGS && \
     yum clean all  && \
     curl -fsSL https://archive.apache.org/dist/zookeeper/$ZK_DIST/$ZK_DIST.tar.gz | tar xzf - -C /opt && \
-    chmod 777 /usr/local/bin/fix-permissions && \
     /usr/local/bin/fix-permissions /opt/$ZK_DIST && \
-    ln -s /opt/$ZK_DIST /opt/zookeeper 
-
-RUN    rm -rf /opt/zookeeper/CHANGES.txt \
+    ln -s /opt/$ZK_DIST /opt/zookeeper && \
+    rm -rf /opt/zookeeper/CHANGES.txt \
         /opt/zookeeper/README.txt \
         /opt/zookeeper/NOTICE.txt \
         /opt/zookeeper/CHANGES.txt \
@@ -38,10 +36,6 @@ RUN    rm -rf /opt/zookeeper/CHANGES.txt \
 
 COPY zkGenConfig.sh zkOk.sh zkMetrics.sh /opt/zookeeper/bin/
 
-RUN chmod 777 /opt/zookeeper/bin/zkGenConfig.sh && \
-    chmod 777 /opt/zookeeper/bin/zkOk.sh && \
-    chmod 777 /opt/zookeeper/bin/zkMetrics.sh
-
 RUN useradd -u 1001 -r -c "Zookeeper User" $ZK_USER && \
     mkdir -p $ZK_DATA_DIR $ZK_DATA_LOG_DIR $ZK_LOG_DIR /usr/share/zookeeper /tmp/zookeeper && \
     chown -R 1001:0 $ZK_DATA_DIR $ZK_DATA_LOG_DIR $ZK_LOG_DIR /tmp/zookeeper && \
@@ -51,10 +45,5 @@ RUN useradd -u 1001 -r -c "Zookeeper User" $ZK_USER && \
     /usr/local/bin/fix-permissions /tmp/zookeeper
 
 WORKDIR "/opt/zookeeper"
-
-USER root
-
-RUN find /opt/zookeeper -type d -exec chmod 777 {} + && \
-    find /opt/zookeeper -type f -exec chmod +x {} \;
 
 USER 1001
