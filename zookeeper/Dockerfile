@@ -14,6 +14,8 @@ RUN INSTALL_PKGS="gettext tar zip unzip hostname nmap-ncat java-1.8.0-openjdk" &
 
 COPY fix-permissions /usr/local/bin
 
+RUN chmod 777 /usr/local/bin/fix-permissions
+
 RUN curl -fsSL https://archive.apache.org/dist/zookeeper/$ZK_DIST/$ZK_DIST.tar.gz | tar xzf - -C /opt && \
     /usr/local/bin/fix-permissions /opt/$ZK_DIST && \
     ln -s /opt/$ZK_DIST /opt/zookeeper && \
@@ -34,6 +36,9 @@ RUN curl -fsSL https://archive.apache.org/dist/zookeeper/$ZK_DIST/$ZK_DIST.tar.g
         /opt/zookeeper/$ZK_DIST.jar.asc \
         /opt/zookeeper/$ZK_DIST.jar.md5 \
         /opt/zookeeper/$ZK_DIST.jar.sha1
+
+RUN find /opt/zookeeper/ -type d -exec chmod 777 {} + && \
+    find /opt/zookeeper/ -type f -exec chmod 777 {} + 
 
 COPY zkGenConfig.sh zkOk.sh zkMetrics.sh /opt/zookeeper/bin/
 
