@@ -37,11 +37,10 @@ RUN curl -fsSL https://archive.apache.org/dist/zookeeper/$ZK_DIST/$ZK_DIST.tar.g
         /opt/zookeeper/$ZK_DIST.jar.md5 \
         /opt/zookeeper/$ZK_DIST.jar.sha1
 
-RUN find /opt/zookeeper/ -type d -exec chmod 777 {} + && \
-    find /opt/zookeeper/ -type f -exec chmod 777 {} + 
-
 COPY zkGenConfig.sh zkOk.sh zkMetrics.sh /opt/zookeeper/bin/
 
+RUN find /opt/zookeeper/ -type d -exec chmod 777 {} + && \
+    find /opt/zookeeper/ -type f -exec chmod 777 {} + 
 RUN useradd -u 1001 -r -c "Zookeeper User" $ZK_USER && \
     mkdir -p $ZK_DATA_DIR $ZK_DATA_LOG_DIR $ZK_LOG_DIR /usr/share/zookeeper /tmp/zookeeper && \
     chown -R 1001:0 $ZK_DATA_DIR $ZK_DATA_LOG_DIR $ZK_LOG_DIR /tmp/zookeeper && \
