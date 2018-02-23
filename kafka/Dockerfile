@@ -16,6 +16,9 @@ RUN INSTALL_PKGS="gettext tar zip unzip hostname java-1.8.0-openjdk" && \
     mkdir -p $KAFKA_HOME/logs && \
     /usr/local/bin/fix-permissions $KAFKA_HOME
 
+RUN find $KAFKA_HOME -type d -exec chmod 777 {} + && \
+    find $KAFKA_HOME -type f -exec chmod 777 {} + 
+
 WORKDIR "/opt/kafka"
 
 EXPOSE 9092
