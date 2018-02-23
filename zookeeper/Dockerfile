@@ -54,6 +54,7 @@ WORKDIR "/opt/zookeeper"
 
 USER root
 
-RUN chmod -R 777 /opt/zookeper
+RUN find /opt/zookeeper -type d -exec chmod 777 {} + && \
+    find /opt/zookeeper -type f -exec chmod +x {} \;
 
 USER 1001
