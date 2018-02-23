@@ -1,5 +1,7 @@
 FROM rhel:7.4
 
+USER zookeeper
+
 ENV ZK_USER=zookeeper \
     ZK_DATA_DIR=/var/lib/zookeeper/data \
     ZK_DATA_LOG_DIR=/var/lib/zookeeper/log \
@@ -16,8 +18,9 @@ RUN INSTALL_PKGS="gettext tar zip unzip hostname nmap-ncat java-1.8.0-openjdk" &
     curl -fsSL https://archive.apache.org/dist/zookeeper/$ZK_DIST/$ZK_DIST.tar.gz | tar xzf - -C /opt && \
     chmod 777 /usr/local/bin/fix-permissions && \
     /usr/local/bin/fix-permissions /opt/$ZK_DIST && \
-    ln -s /opt/$ZK_DIST /opt/zookeeper && \
-    rm -rf /opt/zookeeper/CHANGES.txt \
+    ln -s /opt/$ZK_DIST /opt/zookeeper 
+
+RUN    rm -rf /opt/zookeeper/CHANGES.txt \
         /opt/zookeeper/README.txt \
         /opt/zookeeper/NOTICE.txt \
         /opt/zookeeper/CHANGES.txt \
@@ -35,6 +38,8 @@ RUN INSTALL_PKGS="gettext tar zip unzip hostname nmap-ncat java-1.8.0-openjdk" &
         /opt/zookeeper/$ZK_DIST.jar.md5 \
         /opt/zookeeper/$ZK_DIST.jar.sha1
 
+USER zookeeper
+
 COPY zkGenConfig.sh zkOk.sh zkMetrics.sh /opt/zookeeper/bin/
 
 RUN chmod 777 /opt/zookeeper/bin/zkGenConfig.sh && \
@@ -51,5 +56,8 @@ RUN useradd -u 1001 -r -c "Zookeeper User" $ZK_USER && \
 
 WORKDIR "/opt/zookeeper"
 
-# USER 1001
-USER $ZK_USER
+USER root
+
+RUN chmod -R 777 /opt/zookeper
+
+USER 1001
