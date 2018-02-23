@@ -1,7 +1,5 @@
 FROM rhel:7.4
 
-USER zookeeper
-
 ENV ZK_USER=zookeeper \
     ZK_DATA_DIR=/var/lib/zookeeper/data \
     ZK_DATA_LOG_DIR=/var/lib/zookeeper/log \
@@ -37,8 +35,6 @@ RUN    rm -rf /opt/zookeeper/CHANGES.txt \
         /opt/zookeeper/$ZK_DIST.jar.asc \
         /opt/zookeeper/$ZK_DIST.jar.md5 \
         /opt/zookeeper/$ZK_DIST.jar.sha1
-
-USER zookeeper
 
 COPY zkGenConfig.sh zkOk.sh zkMetrics.sh /opt/zookeeper/bin/
 
